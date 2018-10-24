@@ -28,4 +28,4 @@ Similar to themes, you can control Flask debugging by toggling the FLASK_DEBUG e
 
 ### Creating Your Deployment Artefact
 1. Via terminal change directory the root of this directory<br /><br />
-`rm Archive.zip && zip -r Archive.zip .`
+`rm Archive.zip && zip -r -x *.git* --exclude=*.DS_Store* Archive.zip .`
