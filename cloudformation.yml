@@ -1,0 +1,51 @@
+Resources:
+  StartupSignupsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: StartupSignupsTable
+      KeySchema: 
+        HashKeyElement:
+          AttributeName: "email"
+          AttributeType: "S"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+  NewSignupQueue: 
+    Type: "AWS::SQS::Queue"
+    Properties:
+      QueueName: SignupQueue
+  NewSignupTopic:
+    Type: AWS::SNS::Topic
+    Properties: 
+      TopicName: Topic
+      Subscription:
+        - Endpoint: "nobody@amazon.com"
+          Protocol: email
+        - Endpoint: 
+            Fn::GetAtt:  ["NewSignupQueue", "Arn"]
+          Protocol: "sqs"
+  AllowSNS2SQSPolicy:
+    Type: "AWS::SQS::QueuePolicy"
+    Properties: 
+      Queues: 
+        - 
+          Ref: "NewSignupQueue"
+      PolicyDocument: 
+        Version: "2008-10-17"
+        Id: "PublicationPolicy"
+        Statement: 
+          - 
+            Sid: "Allow-SNS-SendMessage"
+            Effect: "Allow"
+            Principal: 
+              AWS: "*"
+            Action: 
+              - "sqs:SendMessage"
+            Resource: 
+              Fn::GetAtt: 
+                - "NewSignupQueue"
+                - "Arn"
+            Condition: 
+              ArnEquals: 
+                aws:SourceArn: 
+                  Ref: "NewSignupTopic"

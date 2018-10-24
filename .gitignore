@@ -1,0 +1,12 @@
+*.pyc
+application.config
+development.config
+.elasticbeanstalk/
+release/
+.idea/
+.Python
+bin
+include
+lib
+pip-selfcheck.json
+Archive.zip
