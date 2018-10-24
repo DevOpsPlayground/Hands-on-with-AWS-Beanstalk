@@ -1,0 +1,19 @@
+6. They then do the blue green deploy via the Beanstalk switch URL feature
+
+
+1. Create blue environment (called production-active-callum-tait.domain.com)
+    - Ensure you pick the right roles
+2. Clone blue environment to create green environment
+3. Deploy changes to our green (called production-inactive-callum-tait.domain.com)
+4. Swap environment URL via GUI with cache disabled
+6. Make another change and deploy to our blue environment
+7. Swap environment URL with the team
+8. Talk through a alias deployment and load balancers 
+    - save this for whilst the deployment is going on
+    
+9. Talk through the beanstalk environment variable features
+
+
+Create BeanstalkPlaygroundAdmin who has the same permissions + Route53
+
+* Keep things simple
